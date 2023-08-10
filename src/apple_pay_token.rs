@@ -81,7 +81,7 @@ impl EncryptedToken {
     /// Tries to create a new EncryptedToken instance from a base64 encoded string
     pub fn try_from_base64_str(s: &str) -> Result<Self, ApplePayTokenError> {
         let decoded_token = general_purpose::STANDARD.decode(s)?;
-        let encrypted_token = serde_json::from_slice::<Self>(&decoded_token)?;
+        let encrypted_token = serde_json::from_slice(&decoded_token)?;
 
         Ok(encrypted_token)
     }
@@ -125,7 +125,7 @@ impl EncryptedToken {
         let shared_secret = deriver.derive_to_vec()?;
 
         // Hex encode
-        let shared_secret = hex::encode(shared_secret);
+        let shared_secret = encode(shared_secret);
 
         Ok(shared_secret)
     }
@@ -203,7 +203,7 @@ impl EncryptedToken {
     ) -> Result<String, ApplePayTokenError> {
         let data = general_purpose::STANDARD.decode(cipher_text)?;
 
-        let symmetric_key_bytes = hex::decode(symmetric_key)?;
+        let symmetric_key_bytes = decode(symmetric_key)?;
 
         let iv = vec![0u8; 16]; // Initialization vector of 16 null bytes
         let tag = &data[data.len() - 16..];
