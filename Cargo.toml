@@ -1,0 +1,20 @@
+[package]
+name = "apple-pay-decrypt"
+version = "0.1.0"
+edition = "2021"
+description = "Library to decrypt Apple Pay payment tokens"
+authors = ["Abhyudit Jain <abhyuditjain@gmail.com>"]
+
+[[example]]
+name = "decrypt"
+path = "examples/decrypt.rs"
+
+
+[dependencies]
+base64 = "0.21.2"
+hex = "0.4"
+openssl = { version = "0.10", features = ["vendored"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
+x509-certificate = "0.21.0"
